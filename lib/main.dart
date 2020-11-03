@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:gmeet/UI/ui-helper.dart';
 import 'package:gmeet/pages/joinPage.dart';
 import 'package:gmeet/pages/historyPage.dart';
@@ -16,14 +17,19 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Meet',
-      theme: ThemeData(
-          fontFamily: 'robo',
-          accentColor: UIHelper().altRed,
-          primarySwatch: Colors.green,
-          primaryColor: Colors.white),
-      home: MainPage(),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: SystemUiOverlayStyle(
+          statusBarIconBrightness: Brightness.light,
+          statusBarColor: Colors.transparent),
+      child: MaterialApp(
+        title: 'Meet',
+        theme: ThemeData(
+            fontFamily: 'robo',
+            accentColor: UIHelper().altRed,
+            primarySwatch: Colors.green,
+            primaryColor: Colors.white),
+        home: MainPage(),
+      ),
     );
   }
 }
