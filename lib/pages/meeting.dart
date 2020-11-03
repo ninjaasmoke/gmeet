@@ -189,45 +189,7 @@ class _MeetingPageState extends State<MeetingPage> {
                   onWillPop: () async {
                     return false;
                   },
-                  child: Scaffold(
-                    backgroundColor: Colors.black,
-                    body: Center(
-                      child: Container(
-                        margin: EdgeInsets.only(top: 50.0),
-                        height: 200,
-                        width: MediaQuery.of(context).size.width * .8,
-                        padding: EdgeInsets.symmetric(
-                            vertical: 16.0, horizontal: 12.0),
-                        alignment: Alignment.center,
-                        decoration: BoxDecoration(
-                            color: UIHelper().bgColor,
-                            borderRadius: BorderRadius.circular(8.0)),
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text(
-                              this.widget.meetingID == null ||
-                                      this.widget.meetingID == ""
-                                  ? "Getting your new meeting ID"
-                                  : "Joining the meeting",
-                              style: TextStyle(
-                                  color: UIHelper().textColor,
-                                  fontFamily: 'psan',
-                                  fontSize: UIHelper().fontSize),
-                            ),
-                            SizedBox(
-                              height: 50.0,
-                            ),
-                            CircularProgressIndicator(
-                              valueColor: AlwaysStoppedAnimation<Color>(
-                                  UIHelper().buttonBlue),
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
+                  child: loadingScreen(),
                 )
               : WillPopScope(
                   onWillPop: _onWillPop,
@@ -544,6 +506,46 @@ class _MeetingPageState extends State<MeetingPage> {
             ),
           )
         ],
+      ),
+    );
+  }
+
+  Widget loadingScreen() {
+    return Scaffold(
+      backgroundColor: Colors.black,
+      body: Center(
+        child: Container(
+          margin: EdgeInsets.only(top: 50.0),
+          height: 200,
+          width: MediaQuery.of(context).size.width * .8,
+          padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 12.0),
+          alignment: Alignment.center,
+          decoration: BoxDecoration(
+              color: UIHelper().bgColor,
+              borderRadius: BorderRadius.circular(8.0)),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: <Widget>[
+              Text(
+                this.widget.meetingID == null || this.widget.meetingID == ""
+                    ? "Getting your new meeting ID"
+                    : "Joining the meeting",
+                style: TextStyle(
+                    color: UIHelper().textColor,
+                    fontFamily: 'psan',
+                    fontSize: UIHelper().fontSize),
+              ),
+              SizedBox(
+                height: 50.0,
+              ),
+              CircularProgressIndicator(
+                valueColor:
+                    AlwaysStoppedAnimation<Color>(UIHelper().buttonBlue),
+              )
+            ],
+          ),
+        ),
       ),
     );
   }
