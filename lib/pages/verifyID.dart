@@ -114,9 +114,7 @@ class _VerifyIDPageState extends State<VerifyIDPage> {
                   accentColor: UIHelper().buttonBlue),
               child: TextField(
                 onChanged: (pattern) {
-                  if (pattern.length == 12) {
-                    verifyCode(pattern);
-                  }
+                  verifyCode(pattern);
                 },
                 onSubmitted: (pattern) {
                   verifyCode(pattern);
@@ -140,19 +138,19 @@ class _VerifyIDPageState extends State<VerifyIDPage> {
               ),
             ),
           ),
-          Padding(
-            padding: EdgeInsets.all(20),
-            child: error
-                ? Text(
-                    'We have encountered an error with the code. Please try again.',
-                    style: TextStyle(
-                        color: UIHelper().cancelRed.withOpacity(.9),
-                        fontStyle: FontStyle.italic,
-                        fontFamily: 'osan',
-                        fontSize: UIHelper().fontSize),
-                  )
-                : Container(),
-          )
+          // Padding(
+          //   padding: EdgeInsets.all(20),
+          //   child: error
+          //       ? Text(
+          //           'We have encountered an error with the code. Please try again.',
+          //           style: TextStyle(
+          //               color: UIHelper().cancelRed.withOpacity(.9),
+          //               fontStyle: FontStyle.italic,
+          //               fontFamily: 'osan',
+          //               fontSize: UIHelper().fontSize),
+          //         )
+          //       : Container(),
+          // )
         ],
       ),
     );
