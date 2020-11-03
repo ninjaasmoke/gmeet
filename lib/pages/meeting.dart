@@ -16,7 +16,7 @@ class MeetingPage extends StatefulWidget {
 class _MeetingPageState extends State<MeetingPage> {
   TextEditingController message = TextEditingController();
 
-  bool videoOn = false, voiceOn = false;
+  bool videoOn = false, voiceOn = false, buttonOpacity = true;
 
   RegExp meetingIDReg = new RegExp(r'[0-9a-z]{3}-[0-9a-z]{4}-[0-9a-z]{3}');
 
@@ -183,7 +183,7 @@ class _MeetingPageState extends State<MeetingPage> {
               ),
             ),
           );
-        else
+        else {
           return _currentState != CurrentState.ready
               ? WillPopScope(
                   onWillPop: () async {
@@ -226,6 +226,13 @@ class _MeetingPageState extends State<MeetingPage> {
                           ],
                         ),
                       ),
+                      actions: [
+                        IconButton(
+                          icon: Icon(
+                              Icons.more_vert), //TODO: checkout new icons !!!
+                          onPressed: () {},
+                        )
+                      ],
                     ),
                     body: NotificationListener<OverscrollIndicatorNotification>(
                       onNotification: (overscroll) {
@@ -239,82 +246,104 @@ class _MeetingPageState extends State<MeetingPage> {
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height * .5,
                               // color: Colors.grey[900],
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  SizedBox(),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 16.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: <Widget>[
-                                        SizedBox(),
-                                        CircleAvatar(
-                                          backgroundColor: UIHelper().cancelRed,
-                                          radius: 28.0,
-                                          child: IconButton(
-                                            icon: Icon(
-                                              Icons.call_end,
-                                              color: UIHelper().textColor,
-                                              size: 28.0,
-                                            ),
-                                            onPressed: () => {confirmExit()},
-                                          ),
-                                        ),
-                                        CircleAvatar(
-                                          backgroundColor: !videoOn
-                                              ? UIHelper().bgColor
-                                              : UIHelper().textColor,
-                                          radius: 28.0,
-                                          child: IconButton(
-                                            icon: Icon(
-                                              !videoOn
-                                                  ? Icons.videocam_off
-                                                  : Icons.videocam,
-                                              color: !videoOn
-                                                  ? UIHelper().iconGrey
-                                                  : UIHelper().bgColor,
-                                              size: 28.0,
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                videoOn = !videoOn;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                        CircleAvatar(
-                                          backgroundColor: !voiceOn
-                                              ? UIHelper().bgColor
-                                              : UIHelper().textColor,
-                                          radius: 28.0,
-                                          child: IconButton(
-                                            icon: Icon(
-                                              !voiceOn
-                                                  ? Icons.mic_off
-                                                  : Icons.mic,
-                                              color: !voiceOn
-                                                  ? UIHelper().iconGrey
-                                                  : UIHelper().bgColor,
-                                              size: 28.0,
-                                            ),
-                                            onPressed: () {
-                                              setState(() {
-                                                voiceOn = !voiceOn;
-                                              });
-                                            },
-                                          ),
-                                        ),
-                                        SizedBox(),
-                                      ],
+                              child: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    buttonOpacity = !buttonOpacity;
+                                  });
+                                },
+                                child: Stack(
+                                  // mainAxisSize: MainAxisSize.max,
+                                  // mainAxisAlignment:
+                                  //     MainAxisAlignment.spaceBetween,
+                                  children: <Widget>[
+                                    Container(
+                                      alignment: Alignment.center,
+                                      child: Image.asset(
+                                        'assets/desktop.jpg',
+                                        fit: BoxFit.contain,
+                                      ),
                                     ),
-                                  )
-                                ],
+                                    Positioned(
+                                      bottom: 0,
+                                      child: AnimatedOpacity(
+                                        duration: Duration(seconds: 1),
+                                        opacity: buttonOpacity ? 1.0 : 0.0,
+                                        child: Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 16.0),
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.max,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceAround,
+                                            children: <Widget>[
+                                              SizedBox(),
+                                              CircleAvatar(
+                                                backgroundColor:
+                                                    UIHelper().cancelRed,
+                                                radius: 28.0,
+                                                child: IconButton(
+                                                  icon: Icon(
+                                                    Icons.call_end,
+                                                    color: UIHelper().textColor,
+                                                    size: 28.0,
+                                                  ),
+                                                  onPressed: () =>
+                                                      {confirmExit()},
+                                                ),
+                                              ),
+                                              CircleAvatar(
+                                                backgroundColor: !videoOn
+                                                    ? UIHelper().bgColor
+                                                    : UIHelper().textColor,
+                                                radius: 28.0,
+                                                child: IconButton(
+                                                  icon: Icon(
+                                                    !videoOn
+                                                        ? Icons.videocam_off
+                                                        : Icons.videocam,
+                                                    color: !videoOn
+                                                        ? UIHelper().iconGrey
+                                                        : UIHelper().bgColor,
+                                                    size: 28.0,
+                                                  ),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      videoOn = !videoOn;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              CircleAvatar(
+                                                backgroundColor: !voiceOn
+                                                    ? UIHelper().bgColor
+                                                    : UIHelper().textColor,
+                                                radius: 28.0,
+                                                child: IconButton(
+                                                  icon: Icon(
+                                                    !voiceOn
+                                                        ? Icons.mic_off
+                                                        : Icons.mic,
+                                                    color: !voiceOn
+                                                        ? UIHelper().iconGrey
+                                                        : UIHelper().bgColor,
+                                                    size: 28.0,
+                                                  ),
+                                                  onPressed: () {
+                                                    setState(() {
+                                                      voiceOn = !voiceOn;
+                                                    });
+                                                  },
+                                                ),
+                                              ),
+                                              SizedBox(),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    )
+                                  ],
+                                ),
                               ),
                             ),
                             DefaultTabController(
@@ -375,6 +404,7 @@ class _MeetingPageState extends State<MeetingPage> {
                     ),
                   ),
                 );
+        }
       },
     );
   }
